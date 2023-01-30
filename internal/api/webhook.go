@@ -1,8 +1,6 @@
 package api
 
 import (
-	"fmt"
-
 	"github.com/BrunoKrugel/go-webhook/internal/client"
 	"github.com/BrunoKrugel/go-webhook/internal/model"
 	"github.com/labstack/echo"
@@ -10,12 +8,15 @@ import (
 
 func Webhook(c echo.Context) error {
 	user := c.Param("user")
-	fmt.Println("Method: %s", c.Request().Method)
+
 	kiwify := &model.KiwifyRequest{}
 	if err := c.Bind(kiwify); err != nil {
 		return err
 	}
-	fmt.Println("Kiwify: %s", kiwify)
+
+	if (kiwify == &model.KiwifyRequest{}) {
+		return c.JSON(200, "Not ok")
+	}
 
 	kiwifySales := model.MongoRequest{
 		UserId:      user,
@@ -27,6 +28,5 @@ func Webhook(c echo.Context) error {
 
 	client.UpdateSales(kiwifySales)
 
-	fmt.Printf("User: %s", user)
-	return c.JSON(200, "Hello, World!")
+	return c.JSON(200, "Ok")
 }
