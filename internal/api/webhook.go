@@ -7,7 +7,6 @@ import (
 )
 
 func Webhook(c echo.Context) error {
-	user := c.Param("user")
 
 	kiwify := &model.KiwifyRequest{}
 	if err := c.Bind(kiwify); err != nil {
@@ -19,7 +18,7 @@ func Webhook(c echo.Context) error {
 	}
 
 	kiwifySales := model.MongoRequest{
-		UserId:      user,
+		UserId:      c.Param("user"),
 		ProductId:   kiwify.Product.ProductID,
 		StoreId:     kiwify.StoreID,
 		Date:        kiwify.CreatedAt[0:10],
