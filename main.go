@@ -30,6 +30,7 @@ func main() {
 
 	// Routes
 	e.POST("/:user", api.Webhook)
+	e.GET("/:user", api.Webhook)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
