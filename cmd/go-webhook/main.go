@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"github.com/BrunoKrugel/go-webhook/internal/api"
 	"github.com/BrunoKrugel/go-webhook/internal/client"
@@ -32,5 +33,5 @@ func main() {
 	e.POST("/:user", api.Webhook)
 
 	// Start server
-	e.Logger.Fatal(e.Start(":3000"))
+	e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
 }
