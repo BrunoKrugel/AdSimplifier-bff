@@ -6,15 +6,19 @@ import (
 
 	"github.com/BrunoKrugel/go-webhook/internal/api"
 	"github.com/BrunoKrugel/go-webhook/internal/client"
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
 
 func main() {
-	// err := godotenv.Load()
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
+
+	if os.Getenv("ENVIRONMENT") != "prod" {
+		err := godotenv.Load()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
 
 	err := client.InitMongo()
 	if err != nil {

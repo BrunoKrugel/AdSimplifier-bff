@@ -10,10 +10,12 @@ import (
 
 func Webhook(c echo.Context) error {
 	user := c.Param("user")
+	fmt.Println("Method: %s", c.Request().Method)
 	kiwify := &model.KiwifyRequest{}
 	if err := c.Bind(kiwify); err != nil {
 		return err
 	}
+	fmt.Println("Kiwify: %s", kiwify)
 
 	kiwifySales := model.MongoRequest{
 		UserId:      user,
