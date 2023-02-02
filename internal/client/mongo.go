@@ -45,6 +45,7 @@ func UpdateSales(sales model.MongoRequest) (err error) {
 	filter := bson.D{
 		{Key: "user_id", Value: sales.UserId},
 		{Key: "product_id", Value: sales.ProductId},
+		{Key: "product_name", Value: sales.ProductName},
 		{Key: "store_id", Value: sales.StoreId},
 		{Key: "date", Value: sales.Date},
 	}
