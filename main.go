@@ -25,6 +25,11 @@ func main() {
 		log.Fatal("Error connecting to MongoDB")
 	}
 
+	// err = client.InitOriginalMongo()
+	// if err != nil {
+	// 	log.Fatal("Error connecting to MongoDB2")
+	// }
+
 	// Echo instance
 	e := echo.New()
 

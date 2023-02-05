@@ -16,3 +16,6 @@
 
 .env
 .vscode/
+
+go-webhook
+__debug_bin
