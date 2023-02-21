@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"path"
 
 	"github.com/BrunoKrugel/go-webhook/internal/api"
 	"github.com/BrunoKrugel/go-webhook/internal/client"
@@ -40,6 +41,7 @@ func main() {
 	// Routes
 	e.POST("/:user", api.Webhook)
 	e.GET("/:user", api.Webhook)
+	e.GET(path.Join("/"), api.Web)
 
 	if os.Getenv("PORT") == "" {
 		log.Fatal("$PORT must be set")

@@ -36,3 +36,7 @@ func Webhook(c echo.Context) error {
 
 	return c.JSON(200, "Ok")
 }
+
+func Web(c echo.Context) error {
+	return c.JSON(200, "Ok")
+}
