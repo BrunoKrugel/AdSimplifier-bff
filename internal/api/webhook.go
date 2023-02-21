@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"log"
 	"time"
 
@@ -11,15 +10,16 @@ import (
 )
 
 func Webhook(c echo.Context) error {
-	log.Println("Webhook called at: " + time.Now().Format("2006-01-02 15:04:05"))
+	log.Println("Webhook called")
 	kiwify := &model.KiwifyRequest{}
 	if err := c.Bind(kiwify); err != nil {
-		fmt.Println(err)
+		log.Println("Error binding" + err.Error())
 		return c.JSON(200, err)
 	}
 
 	if (kiwify == &model.KiwifyRequest{}) {
-		return c.JSON(200, "Not ok")
+		log.Println("Empty request")
+		return c.JSON(404, "Not ok")
 	}
 
 	date, _ := time.Parse("2006-01-02", kiwify.CreatedAt[0:10])
