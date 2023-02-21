@@ -10,7 +10,13 @@ import (
 )
 
 func Webhook(c echo.Context) error {
-	log.Println("Webhook called")
+	log.Println("Webhook called by user: " + c.Param("user"))
+
+	if c.Param("user") == "" {
+		log.Println("Empty user")
+		return c.JSON(404, "Not ok")
+	}
+
 	kiwify := &model.KiwifyRequest{}
 	if err := c.Bind(kiwify); err != nil {
 		log.Println("Error binding" + err.Error())
