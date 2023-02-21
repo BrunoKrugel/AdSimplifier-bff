@@ -2,7 +2,6 @@ package client
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"os"
 	"time"
@@ -17,7 +16,9 @@ var MongoClient *mongo.Client
 var Collection *mongo.Collection
 
 func InitMongo() (err error) {
-	fmt.Println("Connecting to MongoDB at: " + os.Getenv("MONGO_DB") + " on collection: " + os.Getenv("MONGO_COLLECTION)"))
+
+	log.Println("Connecting to MongoDB at: " + os.Getenv("MONGO_DB") + " on collection: " + os.Getenv("MONGO_COLLECTION"))
+
 	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
 	clientOptions := options.Client().ApplyURI(os.Getenv("MONGO_URI")).SetServerAPIOptions(serverAPIOptions)
 

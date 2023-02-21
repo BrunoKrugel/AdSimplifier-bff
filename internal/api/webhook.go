@@ -11,7 +11,7 @@ import (
 )
 
 func Webhook(c echo.Context) error {
-	log.Println("Webhook called at: " + time.Now().String())
+	log.Println("Webhook called at: " + time.Now().Format("2006-01-02 15:04:05"))
 	kiwify := &model.KiwifyRequest{}
 	if err := c.Bind(kiwify); err != nil {
 		fmt.Println(err)

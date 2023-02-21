@@ -41,6 +41,10 @@ func main() {
 	e.POST("/:user", api.Webhook)
 	e.GET("/:user", api.Webhook)
 
+	if os.Getenv("PORT") == "" {
+		log.Fatal("$PORT must be set")
+	}
+
 	// Start server
 	e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
 }
