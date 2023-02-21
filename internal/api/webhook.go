@@ -28,7 +28,7 @@ func Webhook(c echo.Context) error {
 		return c.JSON(200, err)
 	}
 
-	if (kiwify == &model.KiwifyRequest{}) {
+	if kiwify.Product.ProductID == "" {
 		log.Println("Empty request")
 		return c.JSON(404, "Not ok")
 	}
