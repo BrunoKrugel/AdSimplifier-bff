@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/BrunoKrugel/go-webhook/internal/client"
@@ -10,7 +11,7 @@ import (
 )
 
 func Webhook(c echo.Context) error {
-
+	log.Println("Webhook called at: " + time.Now().String())
 	kiwify := &model.KiwifyRequest{}
 	if err := c.Bind(kiwify); err != nil {
 		fmt.Println(err)
