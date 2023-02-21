@@ -17,6 +17,11 @@ func Webhook(c echo.Context) error {
 		return c.JSON(404, "Not ok")
 	}
 
+	if c.Param("user") == "favicon.ico" {
+		log.Println("Favicon")
+		return c.JSON(404, "Not ok")
+	}
+
 	kiwify := &model.KiwifyRequest{}
 	if err := c.Bind(kiwify); err != nil {
 		log.Println("Error binding" + err.Error())
