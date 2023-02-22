@@ -62,3 +62,9 @@ func UpdateSales(sales model.MongoRequest) (err error) {
 	}
 	return nil
 }
+
+func CloseMongo() {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	MongoClient.Disconnect(ctx)
+}

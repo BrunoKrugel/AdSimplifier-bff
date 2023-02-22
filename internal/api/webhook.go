@@ -13,13 +13,13 @@ func Webhook(c echo.Context) error {
 	log.Println("Webhook called by user: " + c.Param("user"))
 
 	if c.Param("user") == "" {
-		log.Println("Empty user")
-		return c.JSON(404, "Not ok")
+		log.Println("Empty user received")
+		return c.JSON(404, "Empty user received")
 	}
 
 	if c.Param("user") == "favicon.ico" {
-		log.Println("Favicon")
-		return c.JSON(404, "Not ok")
+		log.Println("Web request received.")
+		return c.JSON(404, "Web request received.")
 	}
 
 	kiwify := &model.KiwifyRequest{}
@@ -29,8 +29,8 @@ func Webhook(c echo.Context) error {
 	}
 
 	if kiwify.Product.ProductID == "" {
-		log.Println("Empty request")
-		return c.JSON(404, "Not ok")
+		log.Println("Empty request received.")
+		return c.JSON(404, "Empty request received.")
 	}
 
 	date, _ := time.Parse("2006-01-02", kiwify.CreatedAt[0:10])
@@ -43,11 +43,13 @@ func Webhook(c echo.Context) error {
 		ProductName: kiwify.Product.ProductName,
 	}
 
-	client.UpdateSales(kiwifySales)
+	go func() {
+		client.UpdateSales(kiwifySales)
+	}()
 
 	return c.JSON(200, "Ok")
 }
 
 func Web(c echo.Context) error {
-	return c.JSON(200, "Ok")
+	return c.JSON(404, "Not authorized")
 }

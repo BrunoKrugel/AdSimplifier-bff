@@ -3,6 +3,8 @@ package main
 import (
 	"log"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/BrunoKrugel/go-webhook/internal/api"
 	"github.com/BrunoKrugel/go-webhook/internal/client"
@@ -25,26 +27,35 @@ func main() {
 		log.Fatal("Error connecting to MongoDB")
 	}
 
-	// err = client.InitOriginalMongo()
-	// if err != nil {
-	// 	log.Fatal("Error connecting to MongoDB2")
-	// }
-
 	// Echo instance
-	e := echo.New()
+	app := echo.New()
 
 	// Middleware
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
+	app.Use(middleware.Logger())
+	app.Use(middleware.Recover())
 
 	// Routes
-	e.POST("/:user", api.Webhook)
-	e.GET("/:user", api.Webhook)
+	app.POST("/:user", api.Webhook)
+	app.GET("/:user", api.Webhook)
 
 	if os.Getenv("PORT") == "" {
 		log.Fatal("$PORT must be set")
 	}
 
 	// Start server
-	e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
+	go func() {
+		app.Logger.Fatal(app.Start(":" + os.Getenv("PORT")))
+	}()
+
+	// Listen for system signals to gracefully stop the application
+	signalChannel := make(chan os.Signal, 2)
+	signal.Notify(signalChannel, os.Interrupt, syscall.SIGTERM)
+	switch <-signalChannel {
+	case os.Interrupt:
+		client.CloseMongo()
+		log.Println("Received SIGINT, stopping...")
+	case syscall.SIGTERM:
+		client.CloseMongo()
+		log.Println("Received SIGTERM, stopping...")
+	}
 }
