@@ -3,6 +3,7 @@ module github.com/BrunoKrugel/go-webhook
 go 1.18
 
 require (
+	github.com/heroku/x v0.0.55
 	github.com/joho/godotenv v1.4.0
 	github.com/labstack/echo v3.3.10+incompatible
 	go.mongodb.org/mongo-driver v1.11.1

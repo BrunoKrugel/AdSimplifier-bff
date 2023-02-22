@@ -8,6 +8,7 @@ import (
 
 	"github.com/BrunoKrugel/go-webhook/internal/api"
 	"github.com/BrunoKrugel/go-webhook/internal/client"
+	_ "github.com/heroku/x/hmetrics/onload"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
