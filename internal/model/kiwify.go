@@ -34,11 +34,11 @@ type KiwifyRequest struct {
 	} `json:"Customer"`
 	Commissions struct {
 		ChargeAmount         interface{}  `json:"charge_amount"`
-		ProductBasePrice     int          `json:"product_base_price"`
-		KiwifyFee            string       `json:"kiwify_fee"`
-		CommissionedStores   string       `json:"commissioned_stores"`
-		MyCommission         int          `json:"my_commission"`
-		FundsStatus          string       `json:"funds_status"`
+		ProductBasePrice     interface{}  `json:"product_base_price"`
+		KiwifyFee            interface{}  `json:"kiwify_fee"`
+		CommissionedStores   interface{}  `json:"commissioned_stores"`
+		MyCommission         interface{}  `json:"my_commission"`
+		FundsStatus          interface{}  `json:"funds_status"`
 		EstimatedDepositDate interface{}  `json:"estimated_deposit_date"`
 		DepositDate          interface{}  `json:"deposit_date"`
 	} `json:"Commissions"`
