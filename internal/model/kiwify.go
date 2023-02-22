@@ -33,14 +33,14 @@ type KiwifyRequest struct {
 		IP       string `json:"ip"`
 	} `json:"Customer"`
 	Commissions struct {
-		ChargeAmount         string      `json:"charge_amount"`
-		ProductBasePrice     int         `json:"product_base_price"`
-		KiwifyFee            string      `json:"kiwify_fee"`
-		CommissionedStores   string      `json:"commissioned_stores"`
-		MyCommission         int         `json:"my_commission"`
-		FundsStatus          string      `json:"funds_status"`
-		EstimatedDepositDate interface{} `json:"estimated_deposit_date"`
-		DepositDate          interface{} `json:"deposit_date"`
+		ChargeAmount         interface{}  `json:"charge_amount"`
+		ProductBasePrice     int          `json:"product_base_price"`
+		KiwifyFee            string       `json:"kiwify_fee"`
+		CommissionedStores   string       `json:"commissioned_stores"`
+		MyCommission         int          `json:"my_commission"`
+		FundsStatus          string       `json:"funds_status"`
+		EstimatedDepositDate interface{}  `json:"estimated_deposit_date"`
+		DepositDate          interface{}  `json:"deposit_date"`
 	} `json:"Commissions"`
 	TrackingParameters struct {
 		Src         string      `json:"src"`
