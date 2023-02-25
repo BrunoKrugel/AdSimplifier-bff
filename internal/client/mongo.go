@@ -13,11 +13,10 @@ import (
 )
 
 var MongoClient *mongo.Client
-var Collection *mongo.Collection
+var SalesCollection *mongo.Collection
+var InfoCollection *mongo.Collection
 
 func InitMongo() (err error) {
-
-	log.Println("Connecting to MongoDB at: " + os.Getenv("MONGO_DB") + " on collection: " + os.Getenv("MONGO_COLLECTION"))
 
 	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
 	clientOptions := options.Client().ApplyURI(os.Getenv("MONGO_URI")).SetServerAPIOptions(serverAPIOptions)
@@ -34,12 +33,12 @@ func InitMongo() (err error) {
 
 	MongoClient = client
 
-	usersCollection := MongoClient.Database(os.Getenv("MONGO_DB")).Collection(os.Getenv("MONGO_COLLECTION"))
-	Collection = usersCollection
+	SalesCollection = MongoClient.Database(os.Getenv("MONGO_DB")).Collection(os.Getenv("MONGO_COLLECTION_SALES"))
+	InfoCollection = MongoClient.Database(os.Getenv("MONGO_DB")).Collection(os.Getenv("MONGO_COLLECTION_INFO"))
 	return nil
 }
 
-func UpdateSales(sales model.MongoRequest) (err error) {
+func UpdateSales(sales model.MongoSales) (err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -55,7 +54,19 @@ func UpdateSales(sales model.MongoRequest) (err error) {
 
 	update := bson.D{{Key: "$inc", Value: bson.D{{Key: "sales_number", Value: 1}}}}
 
-	_, err = Collection.UpdateOne(ctx, filter, update, opts)
+	_, err = SalesCollection.UpdateOne(ctx, filter, update, opts)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	return nil
+}
+
+func InsertSales(sales model.MongoSalesInfo) (err error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	_, err = InfoCollection.InsertOne(ctx, sales)
 	if err != nil {
 		log.Fatal(err)
 		return err

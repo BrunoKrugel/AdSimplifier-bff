@@ -40,7 +40,7 @@ func Webhook(c echo.Context) error {
 
 	date, _ := time.Parse("2006-01-02", kiwify.CreatedAt[0:10])
 
-	kiwifySales := model.MongoRequest{
+	kiwifySales := model.MongoSales{
 		UserId:      c.Param("user"),
 		ProductId:   kiwify.Product.ProductID,
 		StoreId:     kiwify.StoreID,
@@ -48,10 +48,23 @@ func Webhook(c echo.Context) error {
 		ProductName: kiwify.Product.ProductName,
 	}
 
+	kiwifySalesInfo := model.MongoSalesInfo{
+		UserId:        c.Param("user"),
+		ProductName:   kiwify.Product.ProductName,
+		StoreId:       kiwify.StoreID,
+		Date:          date,
+		PaymentMethod: kiwify.PaymentMethod,
+		OrderStatus:   kiwify.OrderStatus,
+		Commission:    kiwify.Commissions.MyCommission,
+	}
+
 	go func() {
 		client.UpdateSales(kiwifySales)
 	}()
 
+	go func() {
+		client.InsertSales(kiwifySalesInfo)
+	}()
 	return c.JSON(200, "Ok")
 }
 
