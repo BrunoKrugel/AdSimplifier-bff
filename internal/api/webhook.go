@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"log"
 	"time"
 
@@ -10,7 +11,6 @@ import (
 )
 
 func Webhook(c echo.Context) error {
-	log.Println("Webhook called by user: " + c.Param("user"))
 
 	if c.Param("user") == "" {
 		log.Println("Empty user received")
@@ -32,6 +32,9 @@ func Webhook(c echo.Context) error {
 		log.Println("Empty request received.")
 		return c.JSON(404, "Empty request received.")
 	}
+
+	kiwifyLog, _ := json.Marshal(kiwify)
+	log.Println(string(kiwifyLog))
 
 	date, _ := time.Parse("2006-01-02", kiwify.CreatedAt[0:10])
 
