@@ -12,6 +12,8 @@ import (
 
 func Webhook(c echo.Context) error {
 
+	log.Println(c.Request().Header)
+
 	if c.Param("user") == "" {
 		log.Println("Empty user received")
 		return c.JSON(404, "Empty user received")
