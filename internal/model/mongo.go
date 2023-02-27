@@ -3,19 +3,19 @@ package model
 import "time"
 
 type MongoSales struct {
-	UserId      string    `json:"user_id"`
-	ProductId   string    `json:"product_id"`
-	StoreId     string    `json:"store_id"`
-	Date        time.Time `json:"date"`
-	ProductName string    `json:"product_name"`
+	User_id      string    `json:"user_id"`
+	Product_id   string    `json:"product_id"`
+	Store_id     string    `json:"store_id"`
+	Date         time.Time `json:"date"`
+	Product_name string    `json:"product_name"`
 }
 
 type MongoSalesInfo struct {
-	UserId        string    `json:"user_id"`
-	ProductName   string    `json:"product_name"`
-	StoreId       string    `json:"store_id"`
-	Date          time.Time `json:"date"`
-	PaymentMethod string    `json:"payment_method"`
-	OrderStatus   string    `json:"order_status"`
-	Commission    int       `json:"commission"`
+	User_id        string    `json:"user_id"`
+	Product_name   string    `json:"product_name"`
+	Store_id       string    `json:"store_id"`
+	Date           time.Time `json:"date"`
+	Payment_method string    `json:"payment_method"`
+	Order_status   string    `json:"order_status"`
+	Commission     int       `json:"commission"`
 }
