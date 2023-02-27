@@ -41,21 +41,21 @@ func Webhook(c echo.Context) error {
 	date, _ := time.Parse("2006-01-02", kiwify.CreatedAt[0:10])
 
 	kiwifySales := model.MongoSales{
-		UserId:      c.Param("user"),
-		ProductId:   kiwify.Product.ProductID,
-		StoreId:     kiwify.StoreID,
-		Date:        date,
-		ProductName: kiwify.Product.ProductName,
+		User_id:      c.Param("user"),
+		Product_id:   kiwify.Product.ProductID,
+		Store_id:     kiwify.StoreID,
+		Date:         date,
+		Product_name: kiwify.Product.ProductName,
 	}
 
 	kiwifySalesInfo := model.MongoSalesInfo{
-		UserId:        c.Param("user"),
-		ProductName:   kiwify.Product.ProductName,
-		StoreId:       kiwify.StoreID,
-		Date:          date,
-		PaymentMethod: kiwify.PaymentMethod,
-		OrderStatus:   kiwify.OrderStatus,
-		Commission:    kiwify.Commissions.MyCommission,
+		User_id:        c.Param("user"),
+		Product_name:   kiwify.Product.ProductName,
+		Store_id:       kiwify.StoreID,
+		Date:           date,
+		Payment_method: kiwify.PaymentMethod,
+		Order_status:   kiwify.OrderStatus,
+		Commission:     kiwify.Commissions.MyCommission,
 	}
 
 	go func() {

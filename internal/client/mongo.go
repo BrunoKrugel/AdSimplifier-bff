@@ -45,10 +45,10 @@ func UpdateSales(sales model.MongoSales) (err error) {
 	opts := options.Update().SetUpsert(true)
 
 	filter := bson.D{
-		{Key: "user_id", Value: sales.UserId},
-		{Key: "product_id", Value: sales.ProductId},
-		{Key: "product_name", Value: sales.ProductName},
-		{Key: "store_id", Value: sales.StoreId},
+		{Key: "user_id", Value: sales.User_id},
+		{Key: "product_id", Value: sales.Product_id},
+		{Key: "product_name", Value: sales.Product_name},
+		{Key: "store_id", Value: sales.Store_id},
 		{Key: "date", Value: sales.Date},
 	}
 
