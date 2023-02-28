@@ -18,4 +18,5 @@ type MongoSalesInfo struct {
 	Payment_method string    `json:"payment_method"`
 	Order_status   string    `json:"order_status"`
 	Commission     int       `json:"commission"`
+	Order_ref      string    `json:"order_ref"`
 }

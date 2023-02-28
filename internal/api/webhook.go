@@ -56,6 +56,7 @@ func Webhook(c echo.Context) error {
 		Payment_method: kiwify.PaymentMethod,
 		Order_status:   kiwify.OrderStatus,
 		Commission:     kiwify.Commissions.MyCommission,
+		Order_ref:      kiwify.OrderRef,
 	}
 
 	go func() {
@@ -66,8 +67,4 @@ func Webhook(c echo.Context) error {
 		client.InsertSales(kiwifySalesInfo)
 	}()
 	return c.JSON(200, "Ok")
-}
-
-func Web(c echo.Context) error {
-	return c.JSON(404, "Not authorized")
 }
