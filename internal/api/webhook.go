@@ -11,7 +11,6 @@ import (
 )
 
 func Webhook(c echo.Context) error {
-
 	log.Println(c.Request().Header)
 
 	if c.Param("user") == "" {
@@ -57,6 +56,11 @@ func Webhook(c echo.Context) error {
 		Order_status:   kiwify.OrderStatus,
 		Commission:     kiwify.Commissions.MyCommission,
 		Order_ref:      kiwify.OrderRef,
+		Src:            kiwify.TrackingParameters.Src,
+		Sck:            kiwify.TrackingParameters.Sck,
+		Utm_medium:     kiwify.TrackingParameters.UtmMedium,
+		Utm_content:    kiwify.TrackingParameters.UtmContent,
+		Utm_campaign:   kiwify.TrackingParameters.UtmCampaign,
 	}
 
 	go func() {

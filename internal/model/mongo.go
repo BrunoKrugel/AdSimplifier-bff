@@ -19,4 +19,9 @@ type MongoSalesInfo struct {
 	Order_status   string    `json:"order_status"`
 	Commission     int       `json:"commission"`
 	Order_ref      string    `json:"order_ref"`
+	Src            string    `json:"src"`
+	Sck            string    `json:"sck"`
+	Utm_medium     string    `json:"utm_medium"`
+	Utm_content    string    `json:"utm_content"`
+	Utm_campaign   string    `json:"utm_campaign"`
 }
