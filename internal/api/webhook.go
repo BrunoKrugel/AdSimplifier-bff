@@ -62,9 +62,21 @@ func Webhook(c echo.Context) error {
 		Utm_content:    kiwify.TrackingParameters.UtmContent,
 		Utm_campaign:   kiwify.TrackingParameters.UtmCampaign,
 	}
+	log.Println(kiwifySalesInfo)
+
+	if kiwifySalesInfo.Order_status == "refunded" {
+		go func() {
+			client.UpdateSales(kiwifySales, -1)
+		}()
+
+		go func() {
+			client.DeleteSales(kiwifySalesInfo)
+		}()
+		return c.JSON(200, "Ok")
+	}
 
 	go func() {
-		client.UpdateSales(kiwifySales)
+		client.UpdateSales(kiwifySales, 1)
 	}()
 
 	go func() {

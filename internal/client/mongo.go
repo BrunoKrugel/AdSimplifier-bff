@@ -38,7 +38,7 @@ func InitMongo() (err error) {
 	return nil
 }
 
-func UpdateSales(sales model.MongoSales) (err error) {
+func UpdateSales(sales model.MongoSales, incValue int) (err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -52,7 +52,7 @@ func UpdateSales(sales model.MongoSales) (err error) {
 		{Key: "date", Value: sales.Date},
 	}
 
-	update := bson.D{{Key: "$inc", Value: bson.D{{Key: "sales_number", Value: 1}}}}
+	update := bson.D{{Key: "$inc", Value: bson.D{{Key: "sales_number", Value: incValue}}}}
 
 	_, err = SalesCollection.UpdateOne(ctx, filter, update, opts)
 	if err != nil {
@@ -67,6 +67,25 @@ func InsertSales(sales model.MongoSalesInfo) (err error) {
 	defer cancel()
 
 	_, err = InfoCollection.InsertOne(ctx, sales)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	return nil
+}
+
+func DeleteSales(sales model.MongoSalesInfo) (err error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	filter := bson.D{
+		{Key: "user_id", Value: sales.User_id},
+		{Key: "product_name", Value: sales.Product_name},
+		{Key: "store_id", Value: sales.Store_id},
+		{Key: "order_ref", Value: sales.Order_ref},
+	}
+
+	_, err = InfoCollection.DeleteOne(ctx, filter)
 	if err != nil {
 		log.Fatal(err)
 		return err
