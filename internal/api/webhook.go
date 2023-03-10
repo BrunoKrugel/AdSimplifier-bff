@@ -6,14 +6,16 @@ import (
 	"time"
 
 	"github.com/BrunoKrugel/go-webhook/internal/client"
+	String "github.com/BrunoKrugel/go-webhook/internal/lib/string"
 	"github.com/BrunoKrugel/go-webhook/internal/model"
+
 	"github.com/labstack/echo"
 )
 
 func Webhook(c echo.Context) error {
 	var salesIndex = 1
 
-	log.Println(c.Request().Header)
+	log.Println("Signature:" + c.QueryParam("signature"))
 
 	if c.Param("user") == "" {
 		log.Println("Empty user received")
@@ -33,7 +35,7 @@ func Webhook(c echo.Context) error {
 
 	if kiwify.Product.ProductID == "" {
 		log.Println("Empty request received.")
-		log.Println(c.Request())
+		log.Println(String.GetJSONRawBody(c))
 		return c.JSON(404, "Empty request received.")
 	}
 
@@ -65,7 +67,6 @@ func Webhook(c echo.Context) error {
 		Utm_content:    kiwify.TrackingParameters.UtmContent,
 		Utm_campaign:   kiwify.TrackingParameters.UtmCampaign,
 	}
-	log.Println(kiwifySalesInfo)
 
 	if kiwifySalesInfo.Order_status == "refunded" {
 		salesIndex = -1
