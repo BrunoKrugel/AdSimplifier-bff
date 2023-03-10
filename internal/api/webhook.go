@@ -33,7 +33,7 @@ func Webhook(c echo.Context) error {
 
 	if kiwify.Product.ProductID == "" {
 		log.Println("Empty request received.")
-		log.Println(kiwify)
+		log.Println(c.Request())
 		return c.JSON(404, "Empty request received.")
 	}
 
