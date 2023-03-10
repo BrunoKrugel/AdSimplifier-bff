@@ -11,6 +11,8 @@ import (
 )
 
 func Webhook(c echo.Context) error {
+	var salesIndex = 1
+
 	log.Println(c.Request().Header)
 
 	if c.Param("user") == "" {
@@ -65,18 +67,15 @@ func Webhook(c echo.Context) error {
 	log.Println(kiwifySalesInfo)
 
 	if kiwifySalesInfo.Order_status == "refunded" {
-		go func() {
-			client.UpdateSales(kiwifySales, -1)
-		}()
+		salesIndex = -1
 
 		go func() {
 			client.DeleteSales(kiwifySalesInfo)
 		}()
-		return c.JSON(200, "Ok")
 	}
 
 	go func() {
-		client.UpdateSales(kiwifySales, 1)
+		client.UpdateSales(kiwifySales, salesIndex)
 	}()
 
 	go func() {
