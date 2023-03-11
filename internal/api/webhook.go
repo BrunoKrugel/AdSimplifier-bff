@@ -15,7 +15,8 @@ import (
 func Webhook(c echo.Context) error {
 	var salesIndex = 1
 
-	log.Println("Signature:" + c.QueryParam("signature"))
+	// log.Println("Signature:" + c.QueryParam("signature"))
+	log.Println(c.Request().Header)
 
 	if c.Param("user") == "" {
 		log.Println("Empty user received")
@@ -29,12 +30,13 @@ func Webhook(c echo.Context) error {
 
 	kiwify := &model.KiwifyRequest{}
 	if err := c.Bind(kiwify); err != nil {
-		log.Println("Error binding" + err.Error())
-		return c.JSON(200, err)
+		log.Println("Error binding: " + err.Error())
+		return c.JSON(404, err)
 	}
 
 	if kiwify.Product.ProductID == "" {
 		log.Println("Empty request received.")
+		log.Println("Signature: " + c.QueryParam("signature"))
 		log.Println(String.GetJSONRawBody(c))
 		return c.JSON(404, "Empty request received.")
 	}
